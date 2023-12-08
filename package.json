@@ -1,0 +1,32 @@
+{
+  "name": "capacitor-app",
+  "version": "1.0.0",
+  "description": "An Amazing Capacitor App",
+  "main": "index.js",
+  "keywords": [
+    "capacitor",
+    "mobile"
+  ],
+  "scripts": {
+    "start": "vite --host",
+    "ios": "npx cap sync && npx cap copy",
+    "ionic:build": "vite build",
+    "ionic:serve": "vite",
+    "sync:ios": "npx cap sync ios"
+  },
+  "dependencies": {
+    "@capacitor-firebase/authentication": "^5.3.0",
+    "@capacitor/camera": "latest",
+    "@capacitor/core": "latest",
+    "@capacitor/ios": "^5.5.1",
+    "@capacitor/splash-screen": "latest",
+    "firebase": "^10.7.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "latest",
+    "vite": "^2.9.13",
+    "vite-plugin-mkcert": "^1.17.1"
+  },
+  "author": "",
+  "license": "ISC"
+}

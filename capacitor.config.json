@@ -1,0 +1,19 @@
+{
+  "appId": "in.r0h.videoai",
+  "appName": "videoai",
+  "bundledWebRuntime": false,
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    },
+    "FirebaseAuthentication": {
+      "skipNativeAuth": false,
+      "providers": ["apple.com"]
+    }
+  },
+  "server": {
+    "url": "https://172.30.224.240:3000/",
+    "androidScheme": "https"
+  }
+}

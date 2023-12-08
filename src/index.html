@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Awesome Capacitor App</title>
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <script type="module" src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.esm.js"></script>
+    <script nomodule src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <link rel="icon" type="image/x-icon" href="./assets/icon/favicon.ico" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body ontouchstart="">
+
+    <p><b>VideoAI</b> – Turn photos to videos with AI!</p>
+
+    <div id="signedOut" class="hidden">
+      <button id="signInAppleButton"><i style="margin-right: 8px;" class="bx bxl-apple"></i> Sign in with Apple</button>
+    </div>
+    <div id="signedIn" style="text-align: left; width: 100%;" class="hidden">
+      <center>
+        <button id="uploadPhotoButton">Add Photo</button>
+      </center>
+      <br><br>
+      <b>Your Videos</b>
+      <p>No videos</p>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+    <script type="module" src="./js/firebase.js"></script>
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>
