@@ -453,6 +453,13 @@
     protobufjs "^7.2.4"
     yargs "^17.7.2"
 
+"@ionic-native/in-app-purchase-2@^5.36.0":
+  version "5.36.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/in-app-purchase-2/-/in-app-purchase-2-5.36.0.tgz#423a8100bf05f54b984dd8fcccc5228710008181"
+  integrity sha512-Mr4ZzqaQzXEldS5CzUoEHe/1O16m+//dWuYAYoJGBc0U2+WMU9iJV7y+c+IlPCB+rfU1yfmfgj06QX8wqvHIWw==
+  dependencies:
+    "@types/cordova" latest
+
 "@ionic/cli-framework-output@^2.2.5":
   version "2.2.7"
   resolved "https://registry.yarnpkg.com/@ionic/cli-framework-output/-/cli-framework-output-2.2.7.tgz#eb2b683301201abeb0a7a0fc0cbc9eb5b5c894ca"
@@ -699,6 +706,11 @@
   resolved "https://registry.yarnpkg.com/@stencil/core/-/core-4.8.1.tgz#34f62c3d0f2a2f43abe935092fe13fa6cce1bf2b"
   integrity sha512-KG1H10j24rlyxIqOI4CG8/h9T7ObTv7giW2H3u1qXV4KKrLykDOpMcLzpqNXqL2Fki3s1QvHyl/oaRvi5waWVw==
 
+"@types/cordova@latest":
+  version "11.0.3"
+  resolved "https://registry.yarnpkg.com/@types/cordova/-/cordova-11.0.3.tgz#4301b1c614899c1c99a83aac45914285462201b7"
+  integrity sha512-kyuRQ40/NWQVhqGIHq78Ehu2Bf9Mlg0LhmSmis6ZFJK7z933FRfYi8tHe/k/0fB+PGfCf95rJC6TO7dopaFvAg==
+
 "@types/fs-extra@^8.0.0":
   version "8.1.5"
   resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-8.1.5.tgz#33aae2962d3b3ec9219b5aca2555ee00274f5927"
@@ -835,6 +847,11 @@ commander@^9.3.0:
   version "9.5.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-9.5.0.tgz#bc08d1eb5cedf7ccb797a96199d41c7bc3e60d30"
   integrity sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==
+
+cordova-plugin-purchase@^13.10.0:
+  version "13.10.0"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-purchase/-/cordova-plugin-purchase-13.10.0.tgz#044c34e5350fb0d4c0ac06adfcbedecdb24a0fb5"
+  integrity sha512-MZCmy+jYwi1sVt+FKSzybDnekn+RmcCxCCGD37w12ST+nQDkbrRv0lBUFKMZlNWP93+KQN2U/vZ3knrneb4Rww==
 
 cross-spawn@^7.0.3:
   version "7.0.3"

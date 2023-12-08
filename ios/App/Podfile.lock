@@ -13,6 +13,8 @@ PODS:
     - FirebaseAuth (= 10.8.0)
   - CapacitorSplashScreen (5.0.6):
     - Capacitor
+  - CordovaPlugins (5.5.1):
+    - CapacitorCordova
   - FirebaseAppCheckInterop (10.11.0)
   - FirebaseAuth (10.8.0):
     - FirebaseAppCheckInterop (~> 10.0)
@@ -50,6 +52,7 @@ DEPENDENCIES:
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorFirebaseAuthentication (from `../../node_modules/@capacitor-firebase/authentication`)"
   - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
+  - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
 
 SPEC REPOS:
   trunk:
@@ -72,6 +75,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor-firebase/authentication"
   CapacitorSplashScreen:
     :path: "../../node_modules/@capacitor/splash-screen"
+  CordovaPlugins:
+    :path: "../capacitor-cordova-ios-plugins"
 
 SPEC CHECKSUMS:
   Capacitor: 9da0a2415e3b6098511f8b5ffdb578d91ee79f8f
@@ -79,6 +84,7 @@ SPEC CHECKSUMS:
   CapacitorCordova: e128cc7688c070ca0bfa439898a5f609da8dbcfe
   CapacitorFirebaseAuthentication: 934d9c5409ba35b6a3c09db25df6b5fad931b70d
   CapacitorSplashScreen: 5fa2ab5e46cf5cc530cf16a51c80c7a986579ccd
+  CordovaPlugins: d0f280d10ecc4819ff36b43185dfed24b24c2451
   FirebaseAppCheckInterop: 255b6c0292fe5da995c8b2df0c02f6a3ca7f61b4
   FirebaseAuth: 28e6fff787467cd15ab51c8c7aa904003b2f57aa
   FirebaseCore: 62fd4d549f5e3f3bd52b7998721c5fa0557fb355
@@ -87,6 +93,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
 
-PODFILE CHECKSUM: bac7b066f6cf92719d61081429c9ce804cd88843
+PODFILE CHECKSUM: a700858ffa1f05b5e83b897424079ba52ca9f93d
 
 COCOAPODS: 1.12.1

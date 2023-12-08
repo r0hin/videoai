@@ -4,6 +4,40 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { toastController } from "@ionic/core";
 import * as timeago from "timeago.js"
 
+import 'cordova-plugin-purchase';
+
+const { store, ProductType, Platform } = CdvPurchase;
+store.register([{
+  type: ProductType.CONSUMABLE,
+  id: "credits1",
+  platform: Platform.APPLE_APPSTORE
+}])
+
+updateUI();
+window.setTimeout(() => {
+  updateUI();
+}, 5000)
+function updateUI() {
+  const {store, Platform} = CdvPurchase;
+  console.log(store.products)
+  const creditsProduct = store.get('credits1', Platform.APPLE_APPSTORE);
+  if (creditsProduct) {
+    console.log(creditsProduct.title)
+    $(`#buy1`).get(0).innerHTML = `Add ${creditsProduct.title} (${creditsProduct.price})`;
+  }
+}
+
+function finishPurchase() {
+
+}
+
+$(`#addCreditButton`).get(0).onclick = () => {
+}
+
+$(`#closePurchasesModal`).get(0).onclick = () => {
+  $(`#modal-purchases`).get(0).dismiss()
+}
+
 $(`#filePicker`).get(0).onchange = async (e) => {
   const userDoc = await getDoc(doc(db, `users/${user.uid}`));
   console.log(userDoc.data())

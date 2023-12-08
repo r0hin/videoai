@@ -21,6 +21,23 @@
   </head>
   <body ontouchstart="">
 
+    <ion-modal id="modal-purchases" trigger="addCreditButton">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Add Credits</ion-title>
+          <ion-buttons slot="end">
+            <ion-button id="closePurchasesModal">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="videoContainer" id="content-${dateObject.getTime()}">
+        <div>buy it
+          <br><br>
+          <button id="buy1"></button>
+        </div>
+      </ion-content>
+    </ion-modal>
+
     <p><b>VideoAI</b> – Turn photos to videos with AI!</p>
     <p><span id="creditCount"></span> Credits</p>
     <br>
@@ -32,7 +49,7 @@
       <center>
         <input type="file" accept="image/*" id="filePicker" />
         <button class="uploadPhotoButton" id="uploadPhotoButton">Add Photo</button>
-        <button class="uploadPhotoButton">Add Credit</button>
+        <button class="uploadPhotoButton" id="addCreditButton">Add Credit</button>
         <div id="loader" class="hidden">
           <ion-spinner></ion-spinner>
         </div>
