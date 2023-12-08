@@ -28,7 +28,7 @@ button {
   background-color: var(--foreground);
   color: var(--background);
   border: none;
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -45,4 +45,32 @@ button:active {
 
 .hidden {
   display: none !important;
+}
+
+.card {
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#filePicker {
+  display: none;
+}
+
+.videoContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.videoShowing {
+  width: calc(100% - 16px);
+  margin: 8px;
+  border: 2px solid red;
+  border-radius: 8px;
+
 }

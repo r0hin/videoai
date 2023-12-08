@@ -1,20 +1,13 @@
 import { FirebaseAuthentication } from "@capacitor-firebase/authentication";
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { OAuthProvider, getAuth, indexedDBLocalPersistence, initializeAuth, onAuthStateChanged, signInWithCredential } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
+import { getStarted } from "./app";
 
 window.user = null;
-
-if (!getApps().length) {
-  const firebaseConfig = {
-    apiKey: "AIzaSyAhGnEwmT_O2408435H9W5ai-5IcIZ4YFM",
-    authDomain: "videoai-0.firebaseapp.com",
-    projectId: "videoai-0",
-    storageBucket: "videoai-0.appspot.com",
-    messagingSenderId: "1016068753715",
-    appId: "1:1016068753715:web:08eba0c116327b277ad646"
-  };
-  initializeApp(firebaseConfig);
-}
+window.storage = null;
+window.db = null;
 
 const getFirebaseAuth = async () => {
   if (Capacitor.isNativePlatform()) {
@@ -25,6 +18,34 @@ const getFirebaseAuth = async () => {
     return getAuth();
   }
 };
+
+
+if (!getApps().length) {
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQ6suyjxHWnehNjZqqfdpWrVjQUteaKLY",
+    authDomain: "videoai-1.firebaseapp.com",
+    projectId: "videoai-1",
+    storageBucket: "videoai-1.appspot.com",
+    messagingSenderId: "329236993600",
+    appId: "1:329236993600:web:59abbc58515f1284dcb1a5"
+  };
+  initializeApp(firebaseConfig);
+
+  onAuthStateChanged(await getFirebaseAuth(), (user) => {
+    window.user = user;
+    if (user) {
+      $(`#signedIn`).removeClass(`hidden`);
+      $(`#signedOut`).addClass(`hidden`);
+      getStarted();
+    } else {
+      $(`#signedIn`).addClass(`hidden`);
+      $(`#signedOut`).removeClass(`hidden`);
+    }
+  });
+}
+
+window.storage = getStorage();
+window.db = getFirestore();
 
 const signInWithApple = async () => {
   // 1. Create credentials on the native layer
@@ -37,19 +58,8 @@ const signInWithApple = async () => {
     idToken: result.credential?.idToken,
     rawNonce: result.credential?.nonce,
   });
-  const auth = getAuth();
+  const auth = await getFirebaseAuth();
   await signInWithCredential(auth, credential);
 };
-
-onAuthStateChanged(getAuth(), (user) => {
-  window.user = user;
-  if (user) {
-    $(`#signedIn`).removeClass(`hidden`);
-    $(`#signedOut`).addClass(`hidden`);
-  } else {
-    $(`#signedIn`).addClass(`hidden`);
-    $(`#signedOut`).removeClass(`hidden`);
-  }
-});
 
 $(`#signInAppleButton`).on('click', signInWithApple);

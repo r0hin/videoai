@@ -14,9 +14,11 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "axios": "^1.6.2",
     "firebase-admin": "^11.8.0",
     "firebase-functions": "^4.3.1",
-    "replicate": "^0.23.0"
+    "replicate": "^0.23.0",
+    "replicate-api": "^0.4.4"
   },
   "devDependencies": {
     "firebase-functions-test": "^3.1.0",

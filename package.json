@@ -20,7 +20,9 @@
     "@capacitor/core": "latest",
     "@capacitor/ios": "^5.5.1",
     "@capacitor/splash-screen": "latest",
-    "firebase": "^10.7.1"
+    "@ionic/core": "^7.6.0",
+    "firebase": "^10.7.1",
+    "timeago.js": "^4.0.2"
   },
   "devDependencies": {
     "@capacitor/cli": "latest",
