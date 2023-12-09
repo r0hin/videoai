@@ -4,6 +4,7 @@ import { onObjectFinalized } from "firebase-functions/v2/storage"
 
 import { initializeApp } from "firebase-admin/app"
 import { getFirestore } from "firebase-admin/firestore"
+import { getMessaging } from "firebase-admin/messaging"
 import { getDownloadURL, getStorage } from "firebase-admin/storage"
 
 import axios from "axios";
@@ -11,12 +12,14 @@ import axios from "axios";
 initializeApp();
 const db = getFirestore();
 const storage = getStorage();
+const messaging = getMessaging();
 
 export const onUserCreated = user().onCreate(async (user) => {
   const uid = user.uid;
   await db.collection("users").doc(uid).set({
     videos: {},
-    created: Date.now()
+    created: Date.now(),
+    credits: 3
   })
   return {success: true}
 })
@@ -103,5 +106,52 @@ export const onGenerationComplete = onRequest({}, async (request, response) => {
     }
   }, {merge: true})
 
+  const tokenDoc = await db.collection("token").doc(`${uid}`).get();
+  const token = tokenDoc.data()?.token;
+
+  if (token) {
+    const message = {
+      notification: {
+        title: "Your video has finished generating!",
+      },
+      token: token
+    }
+  
+    await messaging.send(message);
+  }
+
   response.status(200).send("ok");
+});
+
+export const onPaymentSuccess = onRequest({}, async (request, response) => {
+  console.log(request.body)
+
+  const userID = request.body.event.original_app_user_id;
+  const header = request.headers.authorization;
+
+  if (header !== "Bearer 30nn") {
+    response.status(403).send("Invalid auth header");
+    return;
+  }
+
+  const userDoc = await db.collection("users").doc(userID).get();
+  await db.collection("users").doc(userID).set({
+    credits: userDoc.data()?.credits + 8
+  }, {merge: true})
+
+  const tokenDoc = await db.collection("token").doc(userID).get();
+  const token = tokenDoc.data()?.token;
+
+  if (token) {
+    const message = {
+      notification: {
+        title: "Your credits are added!",
+      },
+      token: token
+    }
+  
+    await messaging.send(message);
+  }
+
+  response.status(200).send("ok")
 });

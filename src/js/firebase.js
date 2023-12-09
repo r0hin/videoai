@@ -3,7 +3,7 @@ import { initializeApp, getApp, getApps } from "firebase/app";
 import { OAuthProvider, getAuth, indexedDBLocalPersistence, initializeAuth, onAuthStateChanged, signInWithCredential } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import { getStarted } from "./app";
+import { getStarted, loadRevenueCat, setupNotifications } from "./app";
 
 window.user = null;
 window.storage = null;
@@ -19,7 +19,6 @@ const getFirebaseAuth = async () => {
   }
 };
 
-
 if (!getApps().length) {
   const firebaseConfig = {
     apiKey: "AIzaSyDQ6suyjxHWnehNjZqqfdpWrVjQUteaKLY",
@@ -31,17 +30,23 @@ if (!getApps().length) {
   };
   initializeApp(firebaseConfig);
 
-  onAuthStateChanged(await getFirebaseAuth(), (user) => {
-    window.user = user;
-    if (user) {
-      $(`#signedIn`).removeClass(`hidden`);
-      $(`#signedOut`).addClass(`hidden`);
-      getStarted();
-    } else {
-      $(`#signedIn`).addClass(`hidden`);
-      $(`#signedOut`).removeClass(`hidden`);
-    }
-  });
+  setListener();
+  async function setListener() {
+    onAuthStateChanged(await getFirebaseAuth(), (user) => {
+      window.user = user;
+      if (user) {
+        $(`#signedIn`).removeClass(`hidden`);
+        $(`#signedOut`).addClass(`hidden`);
+        loadRevenueCat();
+        getStarted();
+        setupNotifications();
+      } else {
+        $(`#signedIn`).addClass(`hidden`);
+        $(`#signedOut`).removeClass(`hidden`);
+      }
+    });
+  }
+
 }
 
 window.storage = getStorage();
@@ -63,3 +68,38 @@ const signInWithApple = async () => {
 };
 
 $(`#signInAppleButton`).on('click', signInWithApple);
+
+$(`#signOut`).get(0).onclick = async () => {
+  (await getFirebaseAuth()).signOut();
+  FirebaseAuthentication.signOut();
+}
+
+$(`#deleteButton`).get(0).onclick = async () => {
+  // Need to reuathenticate
+  const deleteAlert = document.createElement('ion-alert');
+  deleteAlert.header = 'Delete Account';
+  deleteAlert.message = `Are you sure you want to delete your account? Note: For security purposes, you must have signed in recently. If you haven't, please sign out and sign back in.`;
+  deleteAlert.buttons = [{
+    text: "Delete 💔",
+    role: "destructive",
+    handler: async () => {
+      try {
+        await user.delete();
+        alert("😿 Your account has been deleted. Your videos, credits, and details are lost. You can complete this process by deleting VideoAI from your Sign in with Apple settings.")
+      } catch (error) {
+        alert(error.message.split(`Firebase:`)[1]);
+        alert("We're signing you. Please try again.")
+      }
+      (await getFirebaseAuth()).signOut();
+    },
+  }, {
+    text: "Stay ❤️",
+    role: "cancel",
+    handler: () => {
+      alert("Your account is safe 😌")
+    }
+  }];
+  document.body.appendChild(deleteAlert);
+  deleteAlert.present()
+
+}

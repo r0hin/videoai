@@ -10,10 +10,13 @@
     "FirebaseAuthentication": {
       "skipNativeAuth": false,
       "providers": ["apple.com"]
+    },
+    "FirebaseMessaging": {
+      "presentationOptions": ["alert", "sound"]
     }
   },
-  "server": {
-    "url": "https://172.30.224.240:3000/",
+  "servera": {
+    "url": "https://172.30.224.240:5173/",
     "androidScheme": "https"
   }
 }

@@ -5,6 +5,7 @@
     <title>Awesome Capacitor App</title>
     <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta name="format-detection" content="telephone=no" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="msapplication-tap-highlight" content="no" />
 
     <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
@@ -17,46 +18,67 @@
 
     <link rel="icon" type="image/x-icon" href="./assets/icon/favicon.ico" />
     <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="./css/colors.css" />
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body ontouchstart="">
-
-    <ion-modal id="modal-purchases" trigger="addCreditButton">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Add Credits</ion-title>
-          <ion-buttons slot="end">
-            <ion-button id="closePurchasesModal">Close</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="videoContainer" id="content-${dateObject.getTime()}">
-        <div>buy it
-          <br><br>
-          <button id="buy1"></button>
+    <div class="content">
+      <div id="signedOut" class="hidden">
+        <div>
+          <center>
+            <p><b>VideoAI</b> – Turn photos to videos with AI!</p>
+            <button id="signInAppleButton"><i style="margin-right: 8px;" class="bx bxl-apple"></i> Sign in with Apple</button>
+          </center>
         </div>
-      </ion-content>
-    </ion-modal>
-
-    <p><b>VideoAI</b> – Turn photos to videos with AI!</p>
-    <p><span id="creditCount"></span> Credits</p>
-    <br>
-
-    <div id="signedOut" class="hidden">
-      <button id="signInAppleButton"><i style="margin-right: 8px;" class="bx bxl-apple"></i> Sign in with Apple</button>
-    </div>
-    <div id="signedIn" style="text-align: left; width: 100%;" class="hidden">
-      <center>
-        <input type="file" accept="image/*" id="filePicker" />
-        <button class="uploadPhotoButton" id="uploadPhotoButton">Add Photo</button>
-        <button class="uploadPhotoButton" id="addCreditButton">Add Credit</button>
-        <div id="loader" class="hidden">
-          <ion-spinner></ion-spinner>
+      </div>
+      <div id="signedIn" style="text-align: left; width: 100%;" class="hidden">
+        <br><br>
+        <h1>VideoAI</h1>
+        <p><span id="creditCount"></span> Credits. <button id="addCreditButton" class="link"></button></p>
+        <center>
+          <br>
+          <input type="file" accept="image/*" id="filePicker" />
+          <button class="uploadPhotoButton" id="uploadPhotoButton" style="width: 100%">Add Photo</button>
+          <div id="loader" class="hidden">
+            <ion-spinner></ion-spinner>
+          </div>
+        </center>
+        <br><br><br>
+        <b>Your Videos</b>
+        <div id="videolist">
         </div>
-      </center>
-      <br>
-      <b>Your Videos</b>
-      <div id="videolist">
+
+        <br><br><br>
+        <b>More</b>
+        <div class="noPadding">
+          <ion-list inset="true">
+            <ion-item id="aboutButton">
+              <ion-label>About VideoAI</ion-label>
+              <ion-icon size="small" name="link" slot="end"></ion-icon>
+            </ion-item>
+            <a href="https://twitter.com/0xrohin" style="text-decoration: none;">
+              <ion-item>
+                <ion-label>Follow Me</ion-label>
+                <ion-icon size="small" name="logo-twitter" slot="end"></ion-icon>
+              </ion-item>
+            </a>
+          </ion-list>
+
+          <ion-list inset="true">
+            <ion-item id="signOut">
+              <ion-label>Sign Out</ion-label>
+            </ion-item>
+            <ion-item id="deleteButton">
+              <ion-label>Delete Account</ion-label>
+            </ion-item>
+            <a href="https://videoai.rohin.red" style="text-decoration: none;">
+              <ion-item>
+                <ion-label>Privacy Policy</ion-label>
+              </ion-item>
+            </a>
+          </ion-list>
+        </div>
+        <p style="font-size: 10px;">Made with 🩶 by <a href="https://r0h.in">Rohin</a>.</p>
       </div>
     </div>
 

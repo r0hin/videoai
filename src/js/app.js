@@ -1,41 +1,54 @@
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 import { toastController } from "@ionic/core";
 import * as timeago from "timeago.js"
 
-import 'cordova-plugin-purchase';
+import { Purchases } from '@revenuecat/purchases-capacitor';
+import { FirebaseMessaging } from '@capacitor-firebase/messaging';
 
-const { store, ProductType, Platform } = CdvPurchase;
-store.register([{
-  type: ProductType.CONSUMABLE,
-  id: "credits1",
-  platform: Platform.APPLE_APPSTORE
-}])
+if (!window.offerings) {
+  window.offerings = null
+}
 
-updateUI();
-window.setTimeout(() => {
-  updateUI();
-}, 5000)
-function updateUI() {
-  const {store, Platform} = CdvPurchase;
-  console.log(store.products)
-  const creditsProduct = store.get('credits1', Platform.APPLE_APPSTORE);
-  if (creditsProduct) {
-    console.log(creditsProduct.title)
-    $(`#buy1`).get(0).innerHTML = `Add ${creditsProduct.title} (${creditsProduct.price})`;
+export async function setupNotifications() {
+  await FirebaseMessaging.removeAllDeliveredNotifications();
+
+  let result = await FirebaseMessaging.checkPermissions();
+  if (result.receive == "prompt") {
+    result = await FirebaseMessaging.requestPermissions();
   }
+  else if (result.receive == "denied") {
+    return;
+  }
+
+  const token = await FirebaseMessaging.getToken();
+  setDoc(doc(db, `token/${user.uid}`), {
+    token: token.token,
+  })
 }
 
-function finishPurchase() {
+export async function loadRevenueCat() {
+  await Purchases.configure({
+    apiKey: "appl_DbQVhTWrYVbIdESVBjjyzqlbucG",
+    appUserID: user.uid,
+  });
 
+  offerings = await Purchases.getOfferings();
+
+  const creditPackage = offerings.current.availablePackages[0];
+  $(`#addCreditButton`).html(`Add 8 More? (${creditPackage.product.priceString})`)
+
+  console.log(offerings)
 }
 
-$(`#addCreditButton`).get(0).onclick = () => {
-}
+$(`#addCreditButton`).get(0).onclick = async () => {
+  console.log(offerings)
+  const purchaseResult = await Purchases.purchasePackage({
+    aPackage: offerings.current.availablePackages[0]
+  })
 
-$(`#closePurchasesModal`).get(0).onclick = () => {
-  $(`#modal-purchases`).get(0).dismiss()
+  console.log(purchaseResult)
 }
 
 $(`#filePicker`).get(0).onchange = async (e) => {
@@ -105,6 +118,17 @@ $(`#filePicker`).on(`click`, () => {
 
 window.listener = null;
 
+updateDarkLight();
+// Listener
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateDarkLight);
+function updateDarkLight() {
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    $(`body`).addClass('dark')
+  } else {
+    $(`body`).removeClass('dark')
+  }
+}
+
 export function getStarted() {
   try { listener() } catch (error) { }
   listener = onSnapshot(doc(db, `users/${user.uid}`), (doc) => {
@@ -128,59 +152,60 @@ export function getStarted() {
       const date = Number(videoId.split(`.`)[0]);
       const dateObject = new Date(date);
       a.innerHTML = `
-        <ion-modal id="modal-${dateObject.getTime()}" trigger="open-modal-${dateObject.getTime()}">
-          <ion-header>
-            <ion-toolbar>
-              <ion-title>Preview</ion-title>
-              <ion-buttons slot="end">
-                <ion-button id="closeModal-${dateObject.getTime()}">Close</ion-button>
-              </ion-buttons>
-            </ion-toolbar>
-          </ion-header>
-          <ion-content class="videoContainer" id="content-${dateObject.getTime()}">
-            
-          </ion-content>
-        </ion-modal>
-        <div>
-          <b>${timeago.format(dateObject)}</b>
-          ${value.status !== "complete" ? `<div style="font-size: 12px">This shouldn't take longer than a minute.</div>` : ``}
+        <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+          <div>
+            <b>${timeago.format(dateObject)}</b>
+            ${value.status !== "complete" ? `<div style="font-size: 12px">This shouldn't take longer than a minute.</div>` : ``}
+          </div>
+          <div>
+            ${value.status == "complete" ? `<button id="open-modal-${dateObject.getTime()}">Open</button> <button style="margin-left: 8px;" id="share-${dateObject.getTime()}">Share</button>` : `<ion-spinner></ion-spinner>`}
+          </div>
         </div>
-        <div>
-          ${value.status == "complete" ? `
-            <button id="open-modal-${dateObject.getTime()}">Open</button>
-          ` : `<ion-spinner></ion-spinner>`}
-        </div
+        <div id="expandable-${dateObject.getTime()}" class="hidden videoContainer">
+          <video id="previewElement" class="videoShowing"></video>
+        </div>
       `
       $(`#videolist`).append(a);
 
       
       if (value.status == "complete") {
-        const modal = document.getElementById(`modal-${dateObject.getTime()}`);
-
-        $(`#closeModal-${dateObject.getTime()}`).get(0).onclick = () => {
-          modal.dismiss();
-        }
-        
         $(`#open-modal-${dateObject.getTime()}`).get(0).onclick = async () => {
+          $(`#expandable-${dateObject.getTime()}`).toggleClass(`hidden`);
+          if ($(`#expandable-${dateObject.getTime()}`).hasClass(`hidden`)) {
+            $(`#open-modal-${dateObject.getTime()}`).html(`Open`);
+            $(`#previewElement`).get(0).pause();
+            return;
+          }
+          $(`#open-modal-${dateObject.getTime()}`).html(`Close`);
           const downloadURL = await getDownloadURL(ref(storage, `${user.uid}/outputs/${videoId.split(`.`)[0]}.mp4`));
-          window.open(downloadURL, "blank")
-          $(`#content-${dateObject.getTime()}`).html(`
-            <video class="videoShowing" src="${downloadURL}" controls></video>
-            <center>
-              <button id="shareButton-${dateObject.getTime()}">Share</button>
-            </center>
-          `)
-          $(`#shareButton-${dateObject.getTime()}`).get(0).onclick = () => {
-            navigator.share({
-              title: "AI Generated Video",
-              text: "Check out this video I made with VideoAI!",
-              url: downloadURL,
-            })
+          $(`#previewElement`).get(0).src = downloadURL;
+          $(`#previewElement`).get(0).play();
+        }
+
+        $(`#share-${dateObject.getTime()}`).get(0).onclick = async () => {
+          const downloadURL = await getDownloadURL(ref(storage, `${user.uid}/outputs/${videoId.split(`.`)[0]}.mp4`));
+          const shareData = {
+            title: `AI Generated Video`,
+            text: `Check out this video I made with VideoAI!`,
+            url: downloadURL,
+          }
+          try {
+            await navigator.share(shareData);
+          } catch (error) {
+            console.log(error)
           }
         }
       }
     })
-
-
   });
+}
+
+$(`#aboutButton`).get(0).onclick = async () => {
+  const alert = document.createElement('ion-alert');
+  alert.header = 'About VideoAI';
+  alert.message = `VideoAI is a photo to video app that uses open-source AI models to automatically intelligently turn your photos into smooth videos! This is primarily based on StabilityAI's Stable Video Diffiusion (stability-ai/stable-video-diffusion) research paper.`;
+  alert.buttons = ['Cool!'];
+
+  document.body.appendChild(alert);
+  await alert.present();
 }

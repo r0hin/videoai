@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		184ADB5F2B23A9E600B70EBB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 184ADB5E2B23A9E600B70EBB /* GoogleService-Info.plist */; };
+		18EAC1962B24392500DF0995 /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 18EAC1952B24392500DF0995 /* Configuration.storekit */; };
+		18EAC1982B2439D800DF0995 /* StoreKitTestCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 18EAC1972B2439D800DF0995 /* StoreKitTestCertificate.cer */; };
+		18EAC19A2B243D4300DF0995 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EAC1992B243D4300DF0995 /* StoreKit.framework */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		50379B232058CBB4000EE86E /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		504EC3081FED79650016851F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
@@ -21,6 +24,9 @@
 /* Begin PBXFileReference section */
 		184ADB592B230B8F00B70EBB /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		184ADB5E2B23A9E600B70EBB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		18EAC1952B24392500DF0995 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = Configuration.storekit; path = Pods/Configuration.storekit; sourceTree = "<group>"; };
+		18EAC1972B2439D800DF0995 /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; name = StoreKitTestCertificate.cer; path = "../../../../Library/Mobile Documents/com~apple~CloudDocs/Downloads/StoreKitTestCertificate.cer"; sourceTree = "<group>"; };
+		18EAC1992B243D4300DF0995 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -41,6 +47,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A084ECDBA7D38E1E42DFC39D /* Pods_App.framework in Frameworks */,
+				18EAC19A2B243D4300DF0995 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,6 +57,7 @@
 		27E2DDA53C4D2A4D1A88CE4A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18EAC1992B243D4300DF0995 /* StoreKit.framework */,
 				AF277DCFFFF123FFC6DF26C7 /* Pods_App.framework */,
 			);
 			name = Frameworks;
@@ -58,6 +66,8 @@
 		504EC2FB1FED79650016851F = {
 			isa = PBXGroup;
 			children = (
+				18EAC1952B24392500DF0995 /* Configuration.storekit */,
+				18EAC1972B2439D800DF0995 /* StoreKitTestCertificate.cer */,
 				504EC3061FED79650016851F /* App */,
 				504EC3051FED79650016851F /* Products */,
 				7F8756D8B27F46E3366F6CEA /* Pods */,
@@ -161,9 +171,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */,
+				18EAC1962B24392500DF0995 /* Configuration.storekit in Resources */,
 				50B271D11FEDC1A000F3C39B /* public in Resources */,
 				504EC30F1FED79650016851F /* Assets.xcassets in Resources */,
 				50379B232058CBB4000EE86E /* capacitor.config.json in Resources */,
+				18EAC1982B2439D800DF0995 /* StoreKitTestCertificate.cer in Resources */,
 				504EC30D1FED79650016851F /* Main.storyboard in Resources */,
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
 				184ADB5F2B23A9E600B70EBB /* GoogleService-Info.plist in Resources */,
@@ -356,6 +368,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z2DNYB8D62;
 				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VideoAI;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
@@ -378,6 +391,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z2DNYB8D62;
 				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VideoAI;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
