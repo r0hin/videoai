@@ -1,6 +1,6 @@
 {
   "appId": "in.r0h.videoai",
-  "appName": "videoai",
+  "appName": "VideoAI",
   "bundledWebRuntime": false,
   "webDir": "dist",
   "plugins": {
