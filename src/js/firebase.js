@@ -97,8 +97,9 @@ const signInWithApple = async () => {
 $(`#signInAppleButton`).on('click', signInWithApple);
 
 $(`#signOut`).get(0).onclick = async () => {
-  (await getFirebaseAuth()).signOut();
+  await (await getFirebaseAuth()).signOut();
   FirebaseAuthentication.signOut();
+  setListener();
 }
 
 $(`#deleteButton`).get(0).onclick = async () => {
