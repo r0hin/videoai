@@ -1,13 +1,11 @@
-:root {
+body {
   --background: white;
   --foreground: black;
 }
 
-body.dark {
-  :root{
-    --background: black;
-    --foreground: white;
-  }
+body.dark {  
+  --background: black !important;
+  --foreground: white !important;
 }
 
 html, body {
@@ -80,7 +78,7 @@ button:active {
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  border-bottom: 3px dotted grey;
+  /* border-bottom: 3px dotted grey; */
 }
 
 .card:last-child {
