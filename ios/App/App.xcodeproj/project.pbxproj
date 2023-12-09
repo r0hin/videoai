@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		184ADB5F2B23A9E600B70EBB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 184ADB5E2B23A9E600B70EBB /* GoogleService-Info.plist */; };
 		18EAC1962B24392500DF0995 /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 18EAC1952B24392500DF0995 /* Configuration.storekit */; };
-		18EAC1982B2439D800DF0995 /* StoreKitTestCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 18EAC1972B2439D800DF0995 /* StoreKitTestCertificate.cer */; };
 		18EAC19A2B243D4300DF0995 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EAC1992B243D4300DF0995 /* StoreKit.framework */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		50379B232058CBB4000EE86E /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
@@ -25,7 +24,6 @@
 		184ADB592B230B8F00B70EBB /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		184ADB5E2B23A9E600B70EBB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18EAC1952B24392500DF0995 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = Configuration.storekit; path = Pods/Configuration.storekit; sourceTree = "<group>"; };
-		18EAC1972B2439D800DF0995 /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; name = StoreKitTestCertificate.cer; path = "../../../../Library/Mobile Documents/com~apple~CloudDocs/Downloads/StoreKitTestCertificate.cer"; sourceTree = "<group>"; };
 		18EAC1992B243D4300DF0995 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
@@ -67,7 +65,6 @@
 			isa = PBXGroup;
 			children = (
 				18EAC1952B24392500DF0995 /* Configuration.storekit */,
-				18EAC1972B2439D800DF0995 /* StoreKitTestCertificate.cer */,
 				504EC3061FED79650016851F /* App */,
 				504EC3051FED79650016851F /* Products */,
 				7F8756D8B27F46E3366F6CEA /* Pods */,
@@ -175,7 +172,6 @@
 				50B271D11FEDC1A000F3C39B /* public in Resources */,
 				504EC30F1FED79650016851F /* Assets.xcassets in Resources */,
 				50379B232058CBB4000EE86E /* capacitor.config.json in Resources */,
-				18EAC1982B2439D800DF0995 /* StoreKitTestCertificate.cer in Resources */,
 				504EC30D1FED79650016851F /* Main.storyboard in Resources */,
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
 				184ADB5F2B23A9E600B70EBB /* GoogleService-Info.plist in Resources */,

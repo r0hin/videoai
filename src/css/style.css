@@ -75,7 +75,10 @@ button:active {
 }
 
 .card {
-  padding: 16px;
+  margin: 16px 0px;
+  padding: 12px;
+  background-color: var(--ion-card-background);
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   border-bottom: 3px dotted grey;

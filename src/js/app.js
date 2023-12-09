@@ -109,12 +109,15 @@ $(`#filePicker`).get(0).onchange = async (e) => {
 }
 
 $(`#uploadPhotoButton`).get(0).onclick = () => {
+  $(`#filePicker`).get(0).value = null;
+  $(`#filePicker`).get(0).accept = `image/*`;
+  // Set files to empty
+  $(`#filePicker`).get(0).files = null;
+
+
   $(`#filePicker`).get(0).click();
 }
 
-$(`#filePicker`).on(`click`, () => {
-  $(`#filePicker`).get(0).value = null;
-})
 
 window.listener = null;
 

@@ -4,6 +4,7 @@ import { OAuthProvider, getAuth, indexedDBLocalPersistence, initializeAuth, onAu
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { getStarted, loadRevenueCat, setupNotifications } from "./app";
+import { toastController } from "@ionic/core";
 
 window.user = null;
 window.storage = null;
@@ -19,6 +20,8 @@ const getFirebaseAuth = async () => {
   }
 };
 
+window.listener = null;
+
 if (!getApps().length) {
   const firebaseConfig = {
     apiKey: "AIzaSyDQ6suyjxHWnehNjZqqfdpWrVjQUteaKLY",
@@ -30,23 +33,47 @@ if (!getApps().length) {
   };
   initializeApp(firebaseConfig);
 
-  setListener();
-  async function setListener() {
-    onAuthStateChanged(await getFirebaseAuth(), (user) => {
-      window.user = user;
-      if (user) {
-        $(`#signedIn`).removeClass(`hidden`);
-        $(`#signedOut`).addClass(`hidden`);
-        loadRevenueCat();
-        getStarted();
-        setupNotifications();
-      } else {
-        $(`#signedIn`).addClass(`hidden`);
-        $(`#signedOut`).removeClass(`hidden`);
-      }
-    });
-  }
+  setListener();  
+}
 
+$(`#refreshButton`).get(0).onclick = async () => {
+  startRefresh();
+}
+
+async function startRefresh() {
+  console.log("refreshing")
+  const toast = await toastController.create({
+    message: `Refreshed!`,
+    duration: 1500,
+    position: "top",
+  });
+
+  await toast.present();
+
+  setListener();
+  $(`#refreshButton`).get(0).onclick = () => { }
+  window.setTimeout(() => {
+    $(`#refreshButton`).get(0).onclick = async () => {
+      startRefresh();
+    }
+  }, 2999)
+}
+
+async function setListener() {
+  try { listener() } catch (error) { }
+  listener = onAuthStateChanged(await getFirebaseAuth(), (user) => {
+    window.user = user;
+    if (user) {
+      $(`#signedIn`).removeClass(`hidden`);
+      $(`#signedOut`).addClass(`hidden`);
+      loadRevenueCat();
+      getStarted();
+      setupNotifications();
+    } else {
+      $(`#signedIn`).addClass(`hidden`);
+      $(`#signedOut`).removeClass(`hidden`);
+    }
+  });
 }
 
 window.storage = getStorage();
@@ -101,5 +128,4 @@ $(`#deleteButton`).get(0).onclick = async () => {
   }];
   document.body.appendChild(deleteAlert);
   deleteAlert.present()
-
 }
