@@ -36,12 +36,17 @@ export const submitGeneration = onObjectFinalized({bucket: "videoai-1.appspot.co
   const videoId = path.split("/")[1];
 
   const userDoc = await db.collection("users").doc(uid).get();
-  if (userDoc.data()?.credits <= 0) {
+  let creditsToDeduct = 1;
+  if (userDoc.data()?.smootherVideo) {
+    creditsToDeduct = 2;
+  }
+
+  if (userDoc.data()?.credits < creditsToDeduct) {
     return {success: false, error: "no credits"}
   }
   else {
     await db.collection("users").doc(uid).set({
-      credits: userDoc.data()?.credits - 1
+      credits: userDoc.data()?.credits - creditsToDeduct
     }, {merge: true})
   }
 
@@ -67,7 +72,9 @@ export const submitGeneration = onObjectFinalized({bucket: "videoai-1.appspot.co
     data: {
       version: "3f0457e4619daac51203dedb472816fd4af51f3149fa7a9e0b5ffcf1b8172438",
       input: {
-        input_image: url
+        input_image: url,
+        frames_per_second: creditsToDeduct === 1 ? 6 : 11,
+        video_length: creditsToDeduct === 1 ? "14_frames_with_svd" : "25_frames_with_svd_xt",
       },
       webhook: `https://ongenerationcomplete-j5kiq2vqqq-uc.a.run.app?uid=${uid}&videoId=${videoId}`,
       webhook_events_filter: ['completed']

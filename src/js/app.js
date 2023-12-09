@@ -1,4 +1,4 @@
-import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 import { toastController } from "@ionic/core";
@@ -52,6 +52,7 @@ $(`#addCreditButton`).get(0).onclick = async () => {
 }
 
 $(`#filePicker`).get(0).onchange = async (e) => {
+  console.log("Changed!")
   const userDoc = await getDoc(doc(db, `users/${user.uid}`));
   console.log(userDoc.data())
   if (userDoc.data().credits <= 0) {
@@ -145,6 +146,9 @@ function updateDarkLight() {
 export function getStarted() {
   try { listener() } catch (error) { }
   listener = onSnapshot(doc(db, `users/${user.uid}`), (doc) => {
+    if ($(`#smootherVideoToggle`).get(0).checked != doc.data().smootherVideo) {
+      $(`#smootherVideoToggle`).get(0).checked = doc.data().smootherVideo || false;
+    }
     $(`#creditCount`).html(doc.data().credits)
     $(`#videolist`).empty();
     const videos = doc.data().videos;
@@ -222,3 +226,20 @@ $(`#aboutButton`).get(0).onclick = async () => {
   document.body.appendChild(alert);
   await alert.present();
 }
+
+$(`#smootherVideoToggle`).get(0).addEventListener(`ionChange`, async () => {
+  if (!localStorage.getItem("notFirstTime") && $(`#smootherVideoToggle`).get(0).checked) {
+    const alert = document.createElement('ion-alert');
+    alert.header = '🎉 Smoother Video';
+    alert.message = `We will generate videos with ~80% more frames at ~83% more FPS! Warning that each generation will use 2 credits.`;
+    alert.buttons = ['Cool!'];
+  
+    document.body.appendChild(alert);
+    await alert.present();   
+    localStorage.setItem("notFirstTime", true)
+  }
+
+  await updateDoc(doc(db, `users/${user.uid}`), {
+    smootherVideo: $(`#smootherVideoToggle`).get(0).checked,
+  })
+});
