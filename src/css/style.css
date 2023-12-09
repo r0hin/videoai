@@ -3,8 +3,7 @@
   --foreground: black;
 }
 
-/* Prefers dark */
-@media (prefers-color-scheme: dark) {
+body.dark {
   :root{
     --background: black;
     --foreground: white;
