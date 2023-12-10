@@ -1,4 +1,4 @@
-import { onRequest } from "firebase-functions/v2/https";
+import { onCall, onRequest } from "firebase-functions/v2/https";
 import  { user } from "firebase-functions/v1/auth";
 import { onObjectFinalized } from "firebase-functions/v2/storage"
 
@@ -19,7 +19,8 @@ export const onUserCreated = user().onCreate(async (user) => {
   await db.collection("users").doc(uid).set({
     videos: {},
     created: Date.now(),
-    credits: 3
+    credits: 3,
+    smootherVideo: false,
   })
   return {success: true}
 })
@@ -88,6 +89,15 @@ export const submitGeneration = onObjectFinalized({bucket: "videoai-1.appspot.co
   });
 
   return {success: true}
+})
+
+export const setSmooth = onCall(async (request) => {
+  const smooth = request.data.smooth;
+  const uid = request.auth?.uid || "";
+
+  await db.collection("users").doc(uid).set({
+    smootherVideo: smooth
+  }, {merge: true})
 })
 
 export const onGenerationComplete = onRequest({}, async (request, response) => {

@@ -1,5 +1,6 @@
 import { doc, getDoc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { httpsCallable } from "firebase/functions";
 
 import { toastController } from "@ionic/core";
 import * as timeago from "timeago.js"
@@ -23,7 +24,7 @@ export async function setupNotifications() {
   }
 
   const token = await FirebaseMessaging.getToken();
-  setDoc(doc(db, `token/${user.uid}`), {
+  await setDoc(doc(db, `token/${user.uid}`), {
     token: token.token,
   })
 }
@@ -239,7 +240,8 @@ $(`#smootherVideoToggle`).get(0).addEventListener(`ionChange`, async () => {
     localStorage.setItem("notFirstTime", true)
   }
 
-  await updateDoc(doc(db, `users/${user.uid}`), {
-    smootherVideo: $(`#smootherVideoToggle`).get(0).checked,
+  const setSmooth = httpsCallable(functions, "setSmooth")
+  await setSmooth({
+    smooth: $(`#smootherVideoToggle`).get(0).checked,
   })
 });

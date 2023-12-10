@@ -2,12 +2,14 @@ import { FirebaseAuthentication } from "@capacitor-firebase/authentication";
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { OAuthProvider, getAuth, indexedDBLocalPersistence, initializeAuth, onAuthStateChanged, signInWithCredential } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import { getFunctions } from 'firebase/functions';
 import { getStorage } from 'firebase/storage';
 import { getStarted, loadRevenueCat, setupNotifications } from "./app";
 import { toastController } from "@ionic/core";
 
 window.user = null;
 window.storage = null;
+window.functions = null;
 window.db = null;
 
 const getFirebaseAuth = async () => {
@@ -76,6 +78,7 @@ async function setListener() {
   });
 }
 
+window.functions = getFunctions();
 window.storage = getStorage();
 window.db = getFirestore();
 
