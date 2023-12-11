@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>To upload photos from the camera, which will be processed by the AI, users must grant access to their camera.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To upload photos, which will be processed by the AI, users must grant access to their photo library.</string>
 	<key>CFBundleDevelopmentRegion</key>
