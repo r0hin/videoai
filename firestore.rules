@@ -13,7 +13,7 @@ service cloud.firestore {
     // all client requests to your Firestore database will be denied until you Update
     // your rules
     match /token/{userID} {
-      allow read: if request.auth.uid == userID
+      allow write: if request.auth.uid == userID
     }
     
     match /users/{userID} {

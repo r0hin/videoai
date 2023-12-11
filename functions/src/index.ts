@@ -36,6 +36,10 @@ export const submitGeneration = onObjectFinalized({bucket: "videoai-1.appspot.co
   const uid = path.split("/")[0];
   const videoId = path.split("/")[1];
 
+  if (object.data.size < 1000) { // Less than 1kb
+    return {success: false, error: "too small"}
+  }
+
   const userDoc = await db.collection("users").doc(uid).get();
   let creditsToDeduct = 1;
   if (userDoc.data()?.smootherVideo) {
@@ -123,18 +127,22 @@ export const onGenerationComplete = onRequest({}, async (request, response) => {
     }
   }, {merge: true})
 
-  const tokenDoc = await db.collection("token").doc(`${uid}`).get();
-  const token = tokenDoc.data()?.token;
-
-  if (token) {
-    const message = {
-      notification: {
-        title: "Your video has finished generating!",
-      },
-      token: token
-    }
+  try {
+    const tokenDoc = await db.collection("token").doc(`${uid}`).get();
+    const token = tokenDoc.data()?.token;
   
-    await messaging.send(message);
+    if (token) {
+      const message = {
+        notification: {
+          title: "Your video has finished generating!",
+        },
+        token: token
+      }
+    
+      await messaging.send(message);
+    }
+  } catch (error) {
+    
   }
 
   response.status(200).send("ok");
@@ -156,18 +164,22 @@ export const onPaymentSuccess = onRequest({}, async (request, response) => {
     credits: userDoc.data()?.credits + 8
   }, {merge: true})
 
-  const tokenDoc = await db.collection("token").doc(userID).get();
-  const token = tokenDoc.data()?.token;
-
-  if (token) {
-    const message = {
-      notification: {
-        title: "Your credits are added!",
-      },
-      token: token
-    }
+  try {
+    const tokenDoc = await db.collection("token").doc(userID).get();
+    const token = tokenDoc.data()?.token;
   
-    await messaging.send(message);
+    if (token) {
+      const message = {
+        notification: {
+          title: "Your credits are added!",
+        },
+        token: token
+      }
+    
+      await messaging.send(message);
+    } 
+  } catch (error) {
+    
   }
 
   response.status(200).send("ok")
