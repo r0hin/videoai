@@ -169,14 +169,21 @@ export function getStarted() {
       a.classList.add("card");
       const date = Number(videoId.split(`.`)[0]);
       const dateObject = new Date(date);
+
+      let old = true;
+      // if within last 3 minutes
+      if (Date.now() - date < 1000 * 60 * 3) {
+        old = false;
+      }
+      
       a.innerHTML = `
         <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
           <div>
             <b>${timeago.format(dateObject)}</b>
-            ${value.status !== "complete" ? `<div style="font-size: 12px">This shouldn't take longer than a minute.</div>` : ``}
+            ${value.status !== "complete" ? `<div style="font-size: 12px">${old ? "Contact me on X if you want credits refunded!" : "This shouldn't take longer than a minute."}</div>` : ``}
           </div>
           <div>
-            ${value.status == "complete" ? `<button id="open-modal-${dateObject.getTime()}">Open</button> <button style="margin-left: 8px;" id="share-${dateObject.getTime()}">Share</button>` : `<ion-spinner></ion-spinner>`}
+            ${(value.status == "complete") ? `<button id="open-modal-${dateObject.getTime()}">Open</button> <button style="margin-left: 8px;" id="share-${dateObject.getTime()}">Share</button>` : `${old ? "Failed!" : "<ion-spinner></ion-spinner>"}`}
           </div>
         </div>
         <div id="expandable-${dateObject.getTime()}" class="hidden videoContainer">
@@ -184,7 +191,6 @@ export function getStarted() {
         </div>
       `
       $(`#videolist`).append(a);
-
       
       if (value.status == "complete") {
         $(`#open-modal-${dateObject.getTime()}`).get(0).onclick = async () => {
