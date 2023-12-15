@@ -19,7 +19,7 @@ export const onUserCreated = user().onCreate(async (user) => {
   await db.collection("users").doc(uid).set({
     videos: {},
     created: Date.now(),
-    credits: 3,
+    credits: 1,
     smootherVideo: false,
   })
   return {success: true}
@@ -27,7 +27,6 @@ export const onUserCreated = user().onCreate(async (user) => {
 
 export const submitGeneration = onObjectFinalized({bucket: "videoai-1.appspot.com", secrets: ["REPLICATE_KEY"]}, async (object) => {
   const path = object.data.name;
-  console.log(path, process.env.REPLICATE_KEY)
 
   if (path.includes("outputs")) {
     return {success: false, error: "already generated"}
@@ -109,9 +108,6 @@ export const onGenerationComplete = onRequest({}, async (request, response) => {
   const uid = request.query.uid || "none";
   const videoId = request.query.videoId || "none";
 
-  console.log(videoURL, uid, videoId)
-
-  // Download video and upload to storage
   const bucket = storage.bucket("videoai-1.appspot.com");
   const file = bucket.file(`${uid}/outputs/${`${videoId}`.split(".")[0]}.mp4`);
   const writeStream = file.createWriteStream();
@@ -141,16 +137,12 @@ export const onGenerationComplete = onRequest({}, async (request, response) => {
     
       await messaging.send(message);
     }
-  } catch (error) {
-    
-  }
+  } catch (error) { }
 
   response.status(200).send("ok");
 });
 
 export const onPaymentSuccess = onRequest({}, async (request, response) => {
-  console.log(request.body)
-
   const userID = request.body.event.original_app_user_id;
   const header = request.headers.authorization;
 
@@ -178,9 +170,7 @@ export const onPaymentSuccess = onRequest({}, async (request, response) => {
     
       await messaging.send(message);
     } 
-  } catch (error) {
-    
-  }
+  } catch (error) { }
 
   response.status(200).send("ok")
 });
