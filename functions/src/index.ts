@@ -19,7 +19,7 @@ export const onUserCreated = user().onCreate(async (user) => {
   await db.collection("users").doc(uid).set({
     videos: {},
     created: Date.now(),
-    credits: 0,
+    credits: 4,
     smootherVideo: false,
   })
   return {success: true}
